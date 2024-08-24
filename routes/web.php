@@ -29,4 +29,8 @@ Route::get('/home', function () {
     return Inertia::render('home');
 })->name('home');
 
+
+
+
+
 require __DIR__.'/auth.php';

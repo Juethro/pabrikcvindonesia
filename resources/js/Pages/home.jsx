@@ -1,6 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import { ChevronLeft, ChevronRight } from "react-feather";
 
+const katalogCV = [
+  {
+    id: 1,
+    title: 'Simple',
+    description: 'Desain simpel dan efektif untuk digunakan',
+    image: '/images/sample 1.jpg',
+    group: 'Group 1',
+  },
+  {
+    id: 2,
+    title: 'Classic',
+    description: 'Desain klasik dan efektif untuk digunakan keseharian',
+    image: '/images/sample 1.jpg',
+    group: 'Group 2',
+  },
+  {
+    id: 3,
+    title: 'Modern',
+    description: 'Desain modern dan efektif untuk digunakan',
+    image: '/images/sample 1.jpg',
+    group: 'Group 1',
+  },
+  {
+    id: 4,
+    title: 'Creative',
+    description: 'Desain kreatif dan efektif untuk digunakan',
+    image: '/images/sample 1.jpg',
+    group: 'Group 3',
+  },
+
+];
+
 function Homepage() {
   const images = [
     "images/Banner1.png",
@@ -22,6 +54,16 @@ function Homepage() {
     const slideInterval = setInterval(next, autoSlideInterval);
     return () => clearInterval(slideInterval);
   }, []);
+
+  const [selectedGroup, setSelectedGroup] = useState(null);
+
+  const handleGroupClick = (group) => {
+    setSelectedGroup(group);
+  };
+
+  const filteredKatalogCV = selectedGroup 
+    ? katalogCV.filter(item => item.group === selectedGroup) 
+    : katalogCV;
       
     return (
         <body class="bg-white text-white">
@@ -103,7 +145,44 @@ function Homepage() {
             <h2 className='text-xl font-montserrat font-medium'>
                 Template CV
             </h2>
+            <p className="text-lg">Pilih template CV yang sesuai dengan selera anda, disini kami menyediakan beraneka ragam desain CV creative.</p>
         </div>
+        <section className="container mx-auto mt-4">
+        <h2 className="text-2xl font-bold mb-4">Katalog CV</h2>
+        <div className='flex flex-col items-center justify-center p-4 space-y-4'>
+          <div className='flex space-x-4 '>
+            <button onClick={() => handleGroupClick(null)} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === null ? 'bg-gray-200' : ''}`}>
+              Semua
+            </button>
+            <button onClick={() => handleGroupClick('Group 1')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 1' ? 'bg-gray-200' : ''}`}>
+              Group 1
+            </button>
+            <button onClick={() => handleGroupClick('Group 2')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 2' ? 'bg-gray-200' : ''}`}>
+              Group 2
+            </button>
+            <button onClick={() => handleGroupClick('Group 3')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 3' ? 'bg-gray-200' : ''}`}>
+              Group 3
+            </button>
+            <button onClick={() => handleGroupClick('Group 4')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 4' ? 'bg-gray-200' : ''}`}>
+              Group 4
+            </button>
+            <button onClick={() => handleGroupClick('Group 5')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 5' ? 'bg-gray-200' : ''}`}>
+              Group 5
+            </button>
+          </div>
+          <div className='grid grid-cols-3 gap-4'>
+            {filteredKatalogCV.map((item) => (
+                <div>
+                <div key={item.id} className='relative p-4 bg-gray-100 rounded-lg shadow'>
+                    <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto'/>
+                </div>
+                <h2 className='text-lg font-bold text-black'>{item.title}</h2>
+                <p className='text-sm text-gray-500'>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
         </body>
     );
 }
