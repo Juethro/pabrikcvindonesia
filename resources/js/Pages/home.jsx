@@ -25,31 +25,34 @@ function Homepage() {
       
     return (
         <body class="bg-white text-white">
-        <nav class="bg-red1 border-gray-200 flex h-20">
-            <div>
-                <img></img>
+        <nav class="bg-local top-0 bg-red1 border-gray-200 flex w-full lg:h-20 pl-10">
+            <div className='h-max'>
+                <img 
+                src='images/Logo.jpg' 
+                className='w-20 sm:w-20 md:w-20 lg:w-20'>
+                </img>
             </div>
 
-            <div class="w-36 mr-10 text-center text-lg font-bold h-full">
-                <span className='h-full align-middle'>
+            <div class="mx-0 px-0 py-2 w-20 lg:w-36 md:w-20 sm:w-20 mr-10 text-xs lg:text-lg md:text-base sm:text-sm h-full">
+                <span className='h-full align-middle font-montserrat font-medium'>
                     Pabrik CV Indonesia
                 </span>
             </div>
 
             <div className='w-20 hover:bg-red-600 mx-2'>
-                <button className='w-full h-full'>
+                <button className='w-full h-full font-montserrat font-medium'>
                     Etalase
                 </button>
             </div>
 
             <div className='w-20 hover:bg-red-600 mx-2'>
-                <button className='w-full h-full'>
+                <button className='w-full h-full font-montserrat font-medium'>
                     Langkah
                 </button>
             </div>
 
             <div className='w-28 hover:bg-red-600 mx-2'>
-                <button className='w-full h-full'>
+                <button className='w-full h-full font-montserrat font-medium'>
                     Tentang Kami
                 </button>
             </div>
@@ -96,10 +99,11 @@ function Homepage() {
             </div>
         </div>
 
-        <section class="bg-white text-black py-12 text-center">
-            <h2 class="text-3xl font-bold mb-4">CV Template</h2>
-            <p class="text-lg">Pilih template CV yang sesuai dengan selera anda, disini kami menyediakan beraneka ragam desain CV creative.</p>
-        </section>
+        <div className='bg-white text-black py-12 text-center'>
+            <h2 className='text-xl font-montserrat font-medium'>
+                Template CV
+            </h2>
+        </div>
         </body>
     );
 }
