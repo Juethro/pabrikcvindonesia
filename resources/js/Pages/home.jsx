@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from "react-feather";
 
-const katalogCV = [
-  { id: 1, title: 'Simple', description: 'Desain simpel dan efektif untuk digunakan', image: '/images/sample 1.jpg', group: 'Group 1' },
-  { id: 2, title: 'Classic', description: 'Desain klasik dan efektif untuk digunakan keseharian', image: '/images/sample 1.jpg', group: 'Group 2' },
-  { id: 3, title: 'Modern', description: 'Desain modern dan efektif untuk digunakan', image: '/images/sample 1.jpg', group: 'Group 1' },
-  { id: 4, title: 'Creative', description: 'Desain kreatif dan efektif untuk digunakan', image: '/images/sample 1.jpg', group: 'Group 3' },
-];
 
 function Homepage() {
   const images = [
@@ -28,7 +22,29 @@ function Homepage() {
     return () => clearInterval(slideInterval);
   }, [autoSlide, next]);
 
+  const [katalogCV, setKatalogCV] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/katalogcv')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setKatalogCV(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
@@ -37,6 +53,9 @@ function Homepage() {
   const filteredKatalogCV = selectedGroup 
     ? katalogCV.filter(item => item.group === selectedGroup) 
     : katalogCV;
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="bg-white text-white">

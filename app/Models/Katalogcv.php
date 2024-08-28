@@ -5,10 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CatalogItem extends Model
+class Katalogcv extends Model
 {
     use HasFactory;
-
-    protected $table = 'catalog_items';
-    protected $fillable = ['Nama_CV', 'Deskripsi', 'Gambar', 'Kategori'];
 }

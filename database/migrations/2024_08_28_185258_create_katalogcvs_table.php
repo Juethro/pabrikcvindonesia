@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('catalog_items', function (Blueprint $table) {
+        Schema::create('katalogcvs', function (Blueprint $table) {
             $table->id();
-            $table->string('Nama_CV');
-            $table->string('Deskripsi');
-            $table->binary('Gambar');
-            $table->string('Kategori');
+            $table->string('title');
+            $table->text('description');
+            $table->string('image');
+            $table->string('group');
             $table->timestamps();
         });
-        
     }
 
     /**
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('catalog_items');
+        Schema::dropIfExists('katalogcvs');
     }
 };
