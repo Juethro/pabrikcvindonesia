@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Katalogcv;
+use App\Models\Catalog;
+
 use Illuminate\Http\Request;
 
-class KatalogCVController extends Controller
+class CatalogController extends Controller
 {
     public function index()
     {
-        $katalogcv = Katalogcv::all();
+        $catalog = Catalog::all();
 
 
-        $katalogcv->each(function($item) {
+        $catalog->each(function($item) {
             $item->image = url('storage/' . $item->image);
         });
 
-        return $katalogcv;
+        return $catalog;
     }
 }

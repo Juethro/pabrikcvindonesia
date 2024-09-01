@@ -22,13 +22,13 @@ function Homepage() {
     return () => clearInterval(slideInterval);
   }, [autoSlide, next]);
 
-  const [katalogCV, setKatalogCV] = useState([]);
+  const [Catalog, setCatalog] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/api/katalogcv')
+    fetch('/api/catalog')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -36,7 +36,7 @@ function Homepage() {
         return response.json();
       })
       .then(data => {
-        setKatalogCV(data);
+        setCatalog(data);
         setLoading(false);
       })
       .catch(error => {
@@ -50,9 +50,9 @@ function Homepage() {
     setSelectedGroup(group);
   };
 
-  const filteredKatalogCV = selectedGroup 
-    ? katalogCV.filter(item => item.group === selectedGroup) 
-    : katalogCV;
+  const filteredCatalog = selectedGroup 
+    ? Catalog.filter(item => item.group === selectedGroup) 
+    : Catalog;
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -146,7 +146,7 @@ function Homepage() {
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {filteredKatalogCV.map((item) => (
+            {filteredCatalog.map((item) => (
               <div key={item.id} className='relative group bg-gray-100 rounded-lg shadow p-4'>
                 <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto' />
                 <div className='bg-black bg-opacity-20 absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
@@ -248,7 +248,7 @@ function Homepage() {
 
         {/* Right Section: CV Preview */}
         <div className='lg:w-1/2 w-full flex justify-center lg:justify-end mt-8 lg:mt-0'>
-          <img src='images/sample 1.jpg' className='w-4/5 sm:w-3/4 lg:w-2/3' alt="CV Preview" />
+          <img src='images/sample1.jpg' className='w-4/5 sm:w-3/4 lg:w-2/3' alt="CV Preview" />
         </div>
       </div>
     </div>
