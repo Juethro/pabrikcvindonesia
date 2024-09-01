@@ -27,8 +27,9 @@ function Homepage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+ 
+  
   useEffect(() => {
     fetch('/api/catalog')
       .then(response => {
@@ -46,6 +47,19 @@ function Homepage() {
         setError(error);
         setLoading(false);
       });
+  }, []);
+
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (window.innerWidth <= 640) {
+        setItemsPerPage(3);
+      } else {
+        setItemsPerPage(6);
+      }
+    };
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
   }, []);
 
   const handleGroupClick = (group) => {
@@ -156,6 +170,7 @@ function Homepage() {
               Group 5
             </button>
           </div>
+
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
             {currentItems.map((item) => (

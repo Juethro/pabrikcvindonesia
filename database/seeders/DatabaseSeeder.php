@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-
         Catalog::create([
             'title' => 'Simple',
             'description' => 'Desain simpel dan efektif untuk digunakan',
@@ -56,8 +55,5 @@ class DatabaseSeeder extends Seeder
             'image' => 'images/sample1.jpg',
             'group' => 'Group 3',
         ]);
-    }
-
-        
-        
+    }        
 }
