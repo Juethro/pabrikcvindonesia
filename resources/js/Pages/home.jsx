@@ -26,6 +26,8 @@ function Homepage() {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   useEffect(() => {
     fetch('/api/catalog')
@@ -48,14 +50,24 @@ function Homepage() {
 
   const handleGroupClick = (group) => {
     setSelectedGroup(group);
+    setCurrentPage(1);
   };
 
   const filteredCatalog = selectedGroup 
     ? Catalog.filter(item => item.group === selectedGroup) 
     : Catalog;
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredCatalog.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCatalog.length / itemsPerPage);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const goToPrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
     <div className="bg-white text-white">
@@ -146,11 +158,11 @@ function Homepage() {
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {filteredCatalog.map((item) => (
+            {currentItems.map((item) => (
               <div key={item.id} className='relative group bg-gray-100 rounded-lg shadow p-4'>
                 <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto' />
                 <div className='bg-black bg-opacity-20 absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                  <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" className='bg-red1 text-white px-10 py-2 rounded-lg shadow'>Pilih</button>
+                  <button className='bg-red1 text-white px-10 py-2 rounded-lg shadow'>Pilih</button>
                 </div>
                 
                 <div className='mt-2'>
@@ -160,6 +172,37 @@ function Homepage() {
               </div>
             ))}
           </div>
+
+          {/* Pagination */}
+          <div className="flex justify-center items-center space-x-2 mt-8">
+            <button
+              onClick={goToPrevPage}
+              className="bg-white rounded-full shadow p-2 disabled:opacity-50  text-gray-800 hover:bg-gray-200"
+              disabled={currentPage === 1}
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => paginate(index + 1)}
+                className={`w-4 h-4 rounded-full ${currentPage === index + 1 ? 'bg-gray-400' : 'bg-gray-200'} transition-all`}
+              />
+            ))}
+
+            <button
+              onClick={goToNextPage}
+              className="bg-white rounded-full shadow p-2 disabled:opacity-50  text-gray-800 hover:bg-gray-200"
+              disabled={currentPage === totalPages}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+
+
+
           <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
                 
