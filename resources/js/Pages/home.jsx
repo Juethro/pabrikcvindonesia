@@ -1,36 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight } from "react-feather";
+import Popup from '@/Components/Popup';
 
 
 function Homepage() {
-  const images = [
-    "images/Banner1.png",
-    "images/Banner2.png",
-    "images/Banner3.png",
-  ];
-
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [curr, setCurr] = useState(0);
-  const autoSlide = true;
-  const autoSlideInterval = 5000;
-
-  const prev = () => setCurr((curr) => (curr === 0 ? images.length - 1 : curr - 1));
-  const next = () => setCurr((curr) => (curr === images.length - 1 ? 0 : curr + 1));
-
-  useEffect(() => {
-    if (!autoSlide) return;
-    const slideInterval = setInterval(next, autoSlideInterval);
-    return () => clearInterval(slideInterval);
-  }, [autoSlide, next]);
-
   const [Catalog, setCatalog] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
- 
-  
+  const autoSlide = true;
+  const autoSlideInterval = 5000;
+  const images = [
+    "images/Banner1.png",
+    "images/Banner2.png",
+    "images/Banner3.png",
+  ];
+
+  const prev = () => setCurr((curr) => (curr === 0 ? images.length - 1 : curr - 1));
+  const next = () => setCurr((curr) => (curr === images.length - 1 ? 0 : curr + 1));
+
   useEffect(() => {
+    fetch('/api/cvbanner')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch banner images');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setImages(data);
+      })
+      .catch(error => {
+        console.error('Error fetching banner images:', error);
+      });
+
+    // Fetch catalog data from API /catalog
     fetch('/api/catalog')
       .then(response => {
         if (!response.ok) {
@@ -48,6 +56,12 @@ function Homepage() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (!autoSlide) return;
+    const slideInterval = setInterval(next, autoSlideInterval);
+    return () => clearInterval(slideInterval);
+  }, [autoSlide, next]);
 
   useEffect(() => {
     const updateItemsPerPage = () => {
@@ -82,6 +96,16 @@ function Homepage() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const goToPrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+
 
   return (
     <div className="bg-white text-white">
@@ -177,16 +201,31 @@ function Homepage() {
               <div key={item.id} className='relative group bg-gray-100 rounded-lg shadow p-4'>
                 <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto' />
                 <div className='bg-black bg-opacity-20 absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                  <button className='bg-red1 text-white px-10 py-2 rounded-lg shadow'>Pilih</button>
+                  <button 
+                    onClick={openPopup}
+                    className='bg-red1 text-white px-10 py-2 rounded-lg shadow'
+                    >Pilih
+                  </button>
                 </div>
                 
                 <div className='mt-2'>
                   <h2 className='text-lg font-bold text-black'>{item.title}</h2>
                   <p className='text-sm text-gray-500'>{item.description}</p>
                 </div>
+
               </div>
             ))}
           </div>
+
+          {isPopupOpen && (
+            <>
+              <Popup closePopup={closePopup} />
+              <div
+                className="fixed inset-0 z-40"
+                onClick={closePopup}
+              ></div>
+            </>
+          )}
 
           {/* Pagination */}
           <div className="flex justify-center items-center space-x-2 mt-8">
@@ -214,15 +253,6 @@ function Homepage() {
               <ChevronRight size={20} />
             </button>
           </div>
-
-
-
-
-          <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                
-            </div>
-        </div>
         </div>
       </section>
 

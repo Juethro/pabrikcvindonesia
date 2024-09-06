@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         Catalog::create([
             'title' => 'Simple',
             'description' => 'Desain simpel dan efektif untuk digunakan',
+            'long_description' => 'Desain ini cocok untuk pelamar yang menginginkan tampilan sederhana, elegan, dan profesional, dengan penggunaan elemen yang minimalis untuk menarik perhatian HRD.',
             'image' => 'images/sample1.jpg',
             'group' => 'Group 1',
         ]);
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
         Catalog::create([
             'title' => 'Classic',
             'description' => 'Desain klasik dan efektif untuk digunakan keseharian',
+            'long_description' => 'Desain klasik ini memberikan tampilan yang tradisional namun profesional, dengan elemen-elemen yang memberikan kesan formal.',
             'image' => 'images/sample1.jpg',
             'group' => 'Group 2',
         ]);
