@@ -12,7 +12,7 @@ class BannerController extends Controller
         $banner = Banner::all();
 
         $banner->each(function($item) {
-            $item->image = url('storage/' . $item->image);
+            $item->gambar = url('storage/' . $item->gambar);
         });
 
         return $banner;
