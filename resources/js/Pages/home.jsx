@@ -15,6 +15,8 @@ function Homepage() {
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const autoSlide = true;
   const autoSlideInterval = 5000;
+  const [selectedItem, setSelectedItem] = useState(null);
+
   
 
   const prev = () => setCurr((curr) => (curr === 0 ? images.length - 1 : curr - 1));
@@ -94,12 +96,14 @@ function Homepage() {
   const goToNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const goToPrevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  const openPopup = () => {
-    setIsPopupOpen(true);
+  const openPopup = (item) => {
+    setSelectedItem(item);  // Set the selected item
+    setIsPopupOpen(true);    // Open the popup
   };
 
   const closePopup = () => {
     setIsPopupOpen(false);
+    setSelectedItem(null);  // Clear the selected item when closing the popup
   };
 
 
@@ -118,17 +122,23 @@ function Homepage() {
         </div>
 
         <div className='flex flex-wrap justify-between w-full lg:w-auto'>
-          <div className='w-20 hover:bg-red-800 mx-2'>
-            <button className='w-full h-full font-montserrat font-medium'>Etalase</button>
-          </div>
+          <a href="#etalase" className='w-auto hover:bg-red-800 mx-2 content-center'>
+            <div className='py-2 px-4 font-montserrat font-medium'>
+              Etalase
+            </div>
+          </a>
 
-          <div className='w-20 hover:bg-red-800 mx-2'>
-            <button className='w-full h-full font-montserrat font-medium'>Langkah</button>
-          </div>
+          <a href="#langkah" className='w-auto hover:bg-red-800 mx-2 content-center'>
+            <div className='py-2 px-4 font-montserrat font-medium'>
+              Langkah
+            </div>
+          </a>
 
-          <div className='w-28 hover:bg-red-800 mx-2'>
-            <button className='w-full h-full font-montserrat font-medium'>Tentang Kami</button>
-          </div>
+          <a href="#tentangkami" className='w-auto hover:bg-red-800 mx-2 content-center'>
+            <div className='py-2 px-4 font-montserrat font-medium'>
+              Tentang Kami
+            </div>
+          </a>
         </div>
       </nav>
 
@@ -187,37 +197,33 @@ function Homepage() {
             </button>
           </div>
 
-
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-            {currentItems.map((item) => (
-              <div key={item.id} className='relative group bg-gray-100 rounded-lg shadow p-4'>
-                <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto' />
-                <div className='bg-black bg-opacity-20 absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
-                  <button 
-                    onClick={openPopup}
-                    className='bg-red1 text-white px-10 py-2 rounded-lg shadow'
-                    >Pilih
-                  </button>
+          <div id='etalase'>
+            {/* Catalog grid */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+              {currentItems.map((item) => (
+                <div key={item.id} className='relative group bg-gray-100 rounded-lg shadow p-4'>
+                  <img src={item.image} alt={`CV ${item.id}`} className='w-full h-auto' />
+                  <div className='bg-black bg-opacity-20 absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+                    <button
+                      onClick={() => openPopup(item)}  // Pass the specific item to openPopup
+                      className='bg-red1 text-white px-10 py-2 rounded-lg shadow'
+                    >
+                      Pilih
+                    </button>
+                  </div>
+                  <div className='mt-2'>
+                    <h2 className='text-lg font-bold text-black'>{item.title}</h2>
+                    <p className='text-sm text-gray-500'>{item.description}</p>
+                  </div>
                 </div>
-                
-                <div className='mt-2'>
-                  <h2 className='text-lg font-bold text-black'>{item.title}</h2>
-                  <p className='text-sm text-gray-500'>{item.description}</p>
-                </div>
+              ))}
+            </div>
 
-              </div>
-            ))}
+            {/* Render Popup if it's open */}
+            {isPopupOpen && selectedItem && (
+              <Popup closePopup={closePopup} item={selectedItem} />
+            )}
           </div>
-
-          {isPopupOpen && (
-            <>
-              <Popup closePopup={closePopup} />
-              <div
-                className="fixed inset-0 z-40"
-                onClick={closePopup}
-              ></div>
-            </>
-          )}
 
           {/* Pagination */}
           <div className="flex justify-center items-center space-x-2 mt-8">
@@ -248,7 +254,7 @@ function Homepage() {
         </div>
       </section>
 
-      <div className='mt-20 bg-gradient-to-r from-red-700 to-red-900 w-full h-50 shadow-inner'>
+      <div id='langkah' className='mt-20 bg-gradient-to-r from-red-700 to-red-900 w-full h-50 shadow-inner'>
         <div className='flex justify-center py-16'>
           <section className="p-8 text-black">
             <h2 className="text-white text-2xl font-montserrat font-bold mb-8 underline underline-offset-2">Bagaimana Langkahnya?</h2>
@@ -302,7 +308,7 @@ function Homepage() {
         </div>
       </div>
 
-      <div className='flex flex-col lg:flex-row bg-white text-black justify-between items-center p-4 sm:p-8 lg:p-10'>
+      <div id='tentangkami' className='flex flex-col lg:flex-row bg-white text-black justify-between items-center p-4 sm:p-8 lg:p-10'>
         {/* Left Section: Text and Logo */}
         <div className='lg:w-1/2 w-full flex flex-col items-center lg:items-start px-4 lg:px-20'>
           <div className='tracking-wide font-bold font-montserrat text-2xl sm:text-3xl bg-gradient-to-r from-black to-gray-400 text-transparent bg-clip-text mb-4'>
