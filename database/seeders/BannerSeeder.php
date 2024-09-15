@@ -14,15 +14,18 @@ class BannerSeeder extends Seeder
     public function run(): void
     {
         Banner::create([
-            'gambar' => "images/Banner1.png"
+            'image_path' => "images/Banner1.png",
+            'order'=> 1
         ]);
 
         Banner::create([
-            'gambar' => "images/Banner2.png"
+            'image_path' => "images/Banner2.png",
+            'order'=> 2
         ]);
 
         Banner::create([
-            'gambar' => "images/Banner3.png"
+            'image_path' => "images/Banner3.png",
+            'order'=> 3
         ]);
     }
 }
