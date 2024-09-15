@@ -145,7 +145,7 @@ function Homepage() {
        <div className="overflow-hidden relative">
           <div className="flex transition-transform ease-out duration-500" style={{ transform: `translateX(-${curr * 100}%)` }}>
           {images.map((image, index) => (
-            <img key={index} src={image.gambar} alt={`Banner ${index + 1}`} className="w-full h-auto" />
+            <img key={index} src={image.image} alt={`Banner ${index + 1}`} className=" h-auto" />
           ))}
           </div>
 
