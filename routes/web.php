@@ -30,7 +30,7 @@ Route::get('/', function () {
 
 Route::get('/admin', function () {
     return Inertia::render('Admin');
-})->name('admin');
+})->middleware(['auth'])->name('admin');
 
 
 
