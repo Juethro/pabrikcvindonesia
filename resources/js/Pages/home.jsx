@@ -8,6 +8,7 @@ function Homepage() {
   const [curr, setCurr] = useState(0);
   const [images, setImages] = useState([]);
   const [Catalog, setCatalog] = useState([]);
+  const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,6 +55,11 @@ function Homepage() {
         setError(error);
         setLoading(false);
       });
+
+      fetch('/api/groups')
+      .then(response => response.json())
+      .then(data => setGroups(data))
+      .catch(error => console.error('Error fetching groups:', error));
   }, []);
 
   useEffect(() => {
@@ -75,13 +81,14 @@ function Homepage() {
     return () => window.removeEventListener('resize', updateItemsPerPage);
   }, []);
 
-  const handleGroupClick = (group) => {
-    setSelectedGroup(group);
+  const handleGroupClick = (groupId) => {
+    setSelectedGroup(groupId);
     setCurrentPage(1);
   };
 
+  // Filter catalog berdasarkan group_id
   const filteredCatalog = selectedGroup 
-    ? Catalog.filter(item => item.group === selectedGroup) 
+    ? Catalog.filter(item => item.group_id === selectedGroup) 
     : Catalog;
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -172,29 +179,21 @@ function Homepage() {
         <h2 className="text-2xl font-bold mb-4">Katalog CV</h2>
         <div className='flex flex-col items-center justify-center p-4 space-y-16'>
           <div className="flex flex-wrap justify-center gap-4 h-10">
-            <button onClick={() => handleGroupClick(null)} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === null ? 'bg-gray-200' : ''}`}>
+            <button 
+              onClick={() => handleGroupClick(null)} 
+              className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === null ? 'bg-gray-200' : ''}`}>
               Semua
             </button>
 
-            <button onClick={() => handleGroupClick('Group 1')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 1' ? 'bg-gray-200' : ''}`}>
-              Group 1
-            </button>
-
-            <button onClick={() => handleGroupClick('Group 2')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 2' ? 'bg-gray-200' : ''}`}>
-              Group 2
-            </button>
-
-            <button onClick={() => handleGroupClick('Group 3')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 3' ? 'bg-gray-200' : ''}`}>
-              Group 3
-            </button>
-
-            <button onClick={() => handleGroupClick('Group 4')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 4' ? 'bg-gray-200' : ''}`}>
-              Group 4
-            </button>
-
-            <button onClick={() => handleGroupClick('Group 5')} className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === 'Group 5' ? 'bg-gray-200' : ''}`}>
-              Group 5
-            </button>
+            {groups.map(group => (
+              <button
+                key={group.id}
+                onClick={() => handleGroupClick(group.id)} 
+                className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === group.id ? 'bg-gray-200' : ''}`}
+              >
+                {group.name}
+              </button>
+            ))}
           </div>
 
           <div id='etalase'>
