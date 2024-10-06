@@ -11,7 +11,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Katalog
-Route::get('/catalog', [CatalogController::class, 'index']);
+Route::get('/catalog', [CatalogController::class, 'index']); // Untuk fetch semua data catalog
+Route::patch('/catalog/{id}', [CatalogController::class, 'update']); // Untuk update catalog berdasarkan ID
+Route::delete('/catalog/{id}', [CatalogController::class, 'destroy']); // Untuk delete
 
 // Banner
 Route::get('/cvbanner', [BannerController::class, 'index']);

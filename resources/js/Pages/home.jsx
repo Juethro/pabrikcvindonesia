@@ -117,9 +117,9 @@ function Homepage() {
 
   return (
     <div className="bg-white text-white">
-      <nav className="bg-red1 border-gray-200 flex flex-wrap w-full lg:h-20 pl-10">
+      <nav className="bg-red1 border-gray-200 flex flex-wrap w-full lg:h-20 justify-center lg:justify-start">
         <div className='h-max'>
-          <img src='images/Logo.jpg' className='w-20' alt="Logo" />
+          <img src='images/Logo.jpg' className='w-14 lg:w-20' alt="Logo" />
         </div>
 
         <div className="flex items-center w-auto lg:w-36 md:w-20 sm:w-20 mr-10 py-2">
@@ -253,14 +253,20 @@ function Homepage() {
         </div>
       </section>
 
-      <div id='langkah' className='mt-20 bg-gradient-to-r from-red-700 to-red-900 w-full h-50 shadow-inner'>
-        <div className='flex justify-center py-16'>
+      <div id='langkah' className='mt-20 bg-gradient-to-r from-red-600 to-red-900 w-full h-50 shadow-inner'>
+        <div class="custom-shape-divider-top-1726733958">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+        </svg>
+        </div>
+
+        <div className='flex justify-center py-8'>
           <section className="p-8 text-black">
             <h2 className="text-white text-2xl font-montserrat font-bold mb-8 underline underline-offset-2">Bagaimana Langkahnya?</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {/* Step 1 */}
-              <div className="bg-white shadow-lg p-6 rounded-lg">
+              <div className="bg-white shadow-lg p-6 rounded-lg border-2">
                 <div className="flex justify-center items-center text-4xl font-bold mb-4">1</div>
                 <div className="flex justify-center mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-12 h-12">
@@ -271,7 +277,7 @@ function Homepage() {
               </div>
 
               {/* Step 2 */}
-              <div className="bg-white shadow-lg p-6 rounded-lg">
+              <div className="bg-white shadow-lg p-6 rounded-lg border-2">
                 <div className="flex justify-center items-center text-4xl font-bold mb-4">2</div>
                 <div className="flex justify-center mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='w-12 h-12'>
@@ -282,7 +288,7 @@ function Homepage() {
               </div>
 
               {/* Step 3 */}
-              <div className="bg-white shadow-lg p-6 rounded-lg">
+              <div className="bg-white shadow-lg p-6 rounded-lg border-2">
                 <div className="flex justify-center items-center text-4xl font-bold mb-4">3</div>
                 <div className="flex justify-center mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='w-12 h-12'>
@@ -293,7 +299,7 @@ function Homepage() {
               </div>
 
               {/* Step 4 */}
-              <div className="bg-white shadow-lg p-6 rounded-lg">
+              <div className="bg-white shadow-lg p-6 rounded-lg border-2">
                 <div className="flex justify-center items-center text-4xl font-bold mb-4">4</div>
                 <div className="flex justify-center mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className='w-12 h-12'>
@@ -319,7 +325,7 @@ function Homepage() {
               <img src='images/Logo.jpg' className='w-24 sm:w-28 md:w-32 lg:w-44 rounded-md' alt="Logo" />
             </div>
             
-            <div className="ml-6 lg:ml-4 md:ml-4 sm:ml-4 bg-gradient-to-r from-red1 via-indigo-600 to-blue-400 text-transparent bg-clip-text">
+            <div className="ml-6 lg:ml-4 md:ml-4 sm:ml-4 bg-gradient-to-r from-red-500 to-red-900 text-transparent bg-clip-text">
               <span className='text-4xl sm:text-6xl lg:text-6xl font-montserrat font-bold'>
                 Pabrik CV Indonesia
               </span>
