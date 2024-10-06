@@ -229,21 +229,6 @@ const TabelBanner = () => {
             
         )}
       </div>
-
-      {/* Muncul tombol save ketika ada perubahan */}
-      {changes && (
-        <div className="flex flex-col px-10 gap-y-1">
-          <div className="text-gray-500 mt-2">Simpan urutan banner?</div>
-          <div className="flex gap-x-4">
-            <button
-              onClick={() => saveChanges()}
-              className="w-24 px-auto py-2 bg-green-500 hover:bg-green-300 text-white rounded-md"
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
