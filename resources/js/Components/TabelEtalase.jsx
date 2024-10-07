@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'react-feather
 import DeletePopup from './DeletePopup';
 import EditPopup from './EditPopup';
 import AddPopup from './AddPopup';
+import { ToastContainer, toast } from 'react-toastify';
 
 const TabelEtalase = () => {
     const [Catalog, setCatalog] = useState([]);
@@ -18,10 +19,15 @@ const TabelEtalase = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [showAddPopup, setShowAddPopup] = useState(false);
 
+    // for toast notification
+    const newStuffAdd = () => toast.success("New Stuff Added!");
+    const stuffDeleted = () => toast.warn("Stuff Deleted!");
+    const stuffEditSaved = () => toast.success("Information Saved!");
+    const newGroupAdd = () => toast.success("New Group Added");
+
     const handleSort = (field) => {
         setSortField(field);
         setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-        // Add sorting logic here
     };
 
     const handleDelete = (item) => {
@@ -51,6 +57,7 @@ const TabelEtalase = () => {
     
             setShowDeletePopup(false);
             setSelectedItem(null);
+            stuffDeleted();
         } catch (error) {
             console.error('Error deleting item:', error);
         }
@@ -75,6 +82,7 @@ const TabelEtalase = () => {
                 );
                 setShowEditPopup(false);
                 setSelectedItem(null);
+                stuffEditSaved();
             } else {
                 console.error('Failed to update catalog');
             }
@@ -100,6 +108,7 @@ const TabelEtalase = () => {
             const addedItem = await response.json();
             setCatalog(prevCatalog => [...prevCatalog, addedItem]); // Tambahkan item baru ke daftar
             setShowAddPopup(false); // Tutup popup
+            newStuffAdd();
         } catch (error) {
             console.error('Error adding item:', error);
         }
@@ -116,21 +125,21 @@ const TabelEtalase = () => {
 
     useEffect(() => {
         fetch('/api/catalog')
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        })
-        .then(data => {
-        setCatalog(data);
-        setLoading(false);
-        })
-        .catch(error => {
-        console.error('Error fetching data:', error);
-        setError(error);
-        setLoading(false);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCatalog(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                setError(error);
+                setLoading(false);
+            });
     }, []);
 
 
@@ -186,6 +195,7 @@ const TabelEtalase = () => {
 
     return (
         <div className='font-montserrat'>
+            <ToastContainer />
             <div className="flex mt-6 mb-2 h-10 pl-10 text-2xl font-black justify-between">
                 <div className="w-96 border-solid border-b-2 border-black">
                     Tabel Produk
@@ -265,7 +275,7 @@ const TabelEtalase = () => {
                                     {truncateText(item.description, 50)} {/* Batasi deskripsi hingga 50 karakter */}
                                 </td>
 
-                                <td className="px-6 py-4">{item.group}</td>
+                                <td className="px-6 py-4">{item.group_name}</td>
 
                                 <td className="px-6 py-4">
                                     <img src={`/${item.image_path}`} alt={item.title} className="w-16 h-16" />

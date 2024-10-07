@@ -129,6 +129,7 @@ const TabelBanner = () => {
   return (
     <div>
       <div>
+        <ToastContainer />
         <div className="h-10 mt-6 pl-10 text-2xl font-black">
             <div className="w-96 border-solid border-b-2 border-black">
                 Preview Banner

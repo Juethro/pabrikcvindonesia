@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Catalog;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +20,9 @@ class DatabaseSeeder extends Seeder
 
         // Jalankan seeder untuk banner
         $this->call(BannerSeeder::class);
+
+        // Jalankan seeder untuk group
+        $this->call(GroupSeeder::class);
 
         // Jalankan seeder untuk menambahkan lebih banyak katalog
         $this->call(CatalogSeeder::class);
