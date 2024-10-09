@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\NumberController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,3 +23,7 @@ Route::post('/cvbanner/saveorder', [BannerController::class, 'save_order']);
 
 // Group
 Route::get('/groups', [GroupController::class, 'index']);
+
+// Number Information
+Route::get('/number_information', [NumberController::class, 'get_number']);
+Route::post('/save_number', [NumberController::class, 'save_number']);
