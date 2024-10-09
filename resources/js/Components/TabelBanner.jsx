@@ -222,9 +222,9 @@ const TabelBanner = () => {
                     <button onClick={()=>saveChanges()} className='w-24 px-auto py-2 bg-green-500 hover:bg-green-300 text-white rounded-md'>
                         Save
                     </button>
-                    <button onClick={()=>cancelChanges()} className='w-24 px-auto py-2 bg-red-500 hover:bg-red-300 text-white rounded-md'>
+                    {/* <button onClick={()=>cancelChanges()} className='w-24 px-auto py-2 bg-red-500 hover:bg-red-300 text-white rounded-md'>
                         Cancel
-                    </button>
+                    </button> */}
                 </div>
             </div>
             
