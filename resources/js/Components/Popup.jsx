@@ -27,7 +27,7 @@ const Popup = ({ closePopup, item }) => {
 
             {/* Tombol WhatsApp */}
             <a
-              href={'https://wa.me/'+ item.wa_number +'?text=Halo%2C%20saya%20ingin%20memesan%20template%20desain%20dengan%20detail%20sebagai%20berikut%3A%0A-%20Kode%20Desain%3A%20*' + item.id + '*%0A-%20Harga%3A%20*Rp50.000*%0A%0ATerimakasih'}
+              href={'https://wa.me/'+ item.wa_number +'?text=Halo%2C%20saya%20ingin%20memesan%20template%20desain%20dengan%20detail%20sebagai%20berikut%3A%0A-%20Kode%20Desain%3A%20*' + item.id + '*%0A%0ATerimakasih'}
               className="bg-green-500 text-white px-4 py-2 rounded-lg"
             >
               WhatsApp
