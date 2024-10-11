@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Catalog extends Model
 {
-    protected $fillable = ['id','title', 'description', 'image_path', 'group'];
+    protected $fillable = ['id','title', 'description', 'image_path', 'group', 'kode'];
 
     use HasFactory;
     public function group()

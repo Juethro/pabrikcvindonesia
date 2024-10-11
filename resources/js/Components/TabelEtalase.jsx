@@ -246,8 +246,8 @@ const TabelEtalase = () => {
                             <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center">
                                     Group
-                                    <button onClick={() => sortItems('group')} className="flex items-center ms-2">
-                                    {sortConfig.key === 'group' && sortConfig.direction === 'ascending' ? (
+                                    <button onClick={() => sortItems('group_name')} className="flex items-center ms-2">
+                                    {sortConfig.key === 'group_name' && sortConfig.direction === 'ascending' ? (
                                             <ChevronUp className="w-6 h-6 text-white hover:text-gray-600" />
                                         ) : (
                                             <ChevronDown className="w-6 h-6 text-white hover:text-gray-600" />
@@ -267,7 +267,7 @@ const TabelEtalase = () => {
                     <tbody>
                         {currentItems.map((item) => (
                             <tr key={item.id} className="bg-white border-b border-gray-200">
-                                <th className="px-6 py-4 font-medium text-black">{item.id}</th>
+                                <th className="px-6 py-4 font-medium text-black">{item.kode}</th>
 
                                 <td className="px-6 py-4">{item.title}</td>
 

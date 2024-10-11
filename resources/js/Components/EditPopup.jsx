@@ -30,8 +30,8 @@ const EditPopup = ({ isOpen, onClose, item, onSave }) => {
                     <div className="mb-4">
                         <label className="block text-gray-700">Kode</label>
                         <input 
-                            name="id" 
-                            value={formData?.id || ''} 
+                            name="kode" 
+                            value={formData?.kode || ''} 
                             onChange={handleChange}
                             className="mt-1 block w-full border border-gray-300 rounded-lg p-2"
                         />
@@ -55,17 +55,6 @@ const EditPopup = ({ isOpen, onClose, item, onSave }) => {
                             value={formData?.description || ''}
                             onChange={handleChange}
                             className="mt-1 block h-60 w-full border border-gray-300 rounded-lg p-2"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700">Group</label>
-                        <input 
-                            type="text" 
-                            name="group" 
-                            value={formData?.group || ''} 
-                            onChange={handleChange}
-                            className="mt-1 block w-full border border-gray-300 rounded-lg p-2"
                         />
                     </div>
 
