@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const TabelEtalase = () => {
     const [Catalog, setCatalog] = useState([]);
+    const [Groups, setGroups] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -123,25 +124,39 @@ const TabelEtalase = () => {
         return text;
     };
 
+    // Fetch data catalog dan group
     useEffect(() => {
-        fetch('/api/catalog')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        const fetchData = async () => {
+            try {
+                const [catalogRes, groupRes] = await Promise.all([
+                    fetch('/api/catalog'), // API untuk catalog
+                    fetch('/api/groups'),  // API untuk grup
+                ]);
+
+                if (!catalogRes.ok || !groupRes.ok) {
+                    throw new Error('Failed to fetch data');
                 }
-                return response.json();
-            })
-            .then(data => {
-                setCatalog(data);
+
+                const catalogData = await catalogRes.json();
+                const groupData = await groupRes.json();
+
+                setCatalog(catalogData);
+                setGroups(groupData);
                 setLoading(false);
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error fetching data:', error);
                 setError(error);
                 setLoading(false);
-            });
+            }
+        };
+
+        fetchData();
     }, []);
 
+    const getGroupName = (groupId) => {
+        const group = Groups.find(g => g.id === groupId);
+        return group ? group.name : 'Unknown Group';
+    };
 
     // Fungsi untuk menangani sorting
     const sortItems = (key) => {
