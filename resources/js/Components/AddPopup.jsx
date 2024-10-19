@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const AddPopup = ({ isOpen, onClose, onSave }) => {
+    const [kode, setKode] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [groupId, setGroupId] = useState('');
@@ -24,28 +25,32 @@ const AddPopup = ({ isOpen, onClose, onSave }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+        formData.append('kode', kode);
         formData.append('title', title);
         formData.append('description', description);
         formData.append('group_id', groupId);
         formData.append('image', image);
-
+    
         try {
             const response = await fetch('/api/catalog', {
                 method: 'POST',
                 body: formData,
             });
-
+    
+            const data = await response.json(); // Ubah ke JSON di sini
+            
             if (response.ok) {
-                const newItem = await response.json();
-                onSave(newItem); // Memperbarui katalog setelah item ditambahkan
+                console.log('Response from server:', data);
+                onSave(data.data); // Memperbarui katalog setelah item ditambahkan
                 onClose(); // Tutup popup setelah berhasil
             } else {
-                console.error('Failed to add item');
+                console.error('Failed to add item:', data);
             }
         } catch (error) {
             console.error('Error adding item:', error);
         }
     };
+    
 
     if (!isOpen) return null;
 
@@ -54,6 +59,16 @@ const AddPopup = ({ isOpen, onClose, onSave }) => {
             <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
                 <h2 className="text-xl font-bold mb-4">Tambah Produk Baru</h2>
                 <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                        <label className="block text-sm font-medium">Kode Produk</label>
+                        <input
+                            type="text"
+                            value={kode}
+                            onChange={(e) => setKode(e.target.value)}
+                            className="w-full p-2 border rounded-lg"
+                            required
+                        />
+                    </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Nama Produk</label>
                         <input
@@ -83,7 +98,7 @@ const AddPopup = ({ isOpen, onClose, onSave }) => {
                             className="w-full p-2 border rounded-lg"
                             required
                         >
-                            <option value="">Pilih Group</option>
+                            <option value=''>Pilih Group</option>
                             {groups.map((group) => (
                                 <option key={group.id} value={group.id}>
                                     {group.name}

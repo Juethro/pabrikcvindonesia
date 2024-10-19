@@ -96,10 +96,7 @@ const TabelEtalase = () => {
         try {
             const response = await fetch('/api/catalog', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newItem),
+                body: newItem,
             });
     
             if (!response.ok) {
@@ -107,13 +104,16 @@ const TabelEtalase = () => {
             }
     
             const addedItem = await response.json();
-            setCatalog(prevCatalog => [...prevCatalog, addedItem]); // Tambahkan item baru ke daftar
-            setShowAddPopup(false); // Tutup popup
-            newStuffAdd();
+            setCatalog(prevCatalog => [...prevCatalog, addedItem]); // Update state dengan item baru tanpa refresh
+            setShowAddPopup(false); // Tutup popup setelah berhasil
         } catch (error) {
             console.error('Error adding item:', error);
         }
     };
+    
+    
+    
+    
     
 
     // Fungsi untuk memotong teks panjang
@@ -293,7 +293,8 @@ const TabelEtalase = () => {
                                 <td className="px-6 py-4">{item.group_name}</td>
 
                                 <td className="px-6 py-4">
-                                    <img src={`/${item.image_path}`} alt={item.title} className="w-16 h-16" />
+                                    <img src={`/storage/${item.image_path}`} alt={item.title} className="w-16 h-16" />
+
                                 </td>
 
                                 <td className="px-6 py-4 text-right">
@@ -357,7 +358,7 @@ const TabelEtalase = () => {
             <AddPopup 
                 isOpen={showAddPopup} 
                 onClose={() => setShowAddPopup(false)} 
-                onAdd={handleAddSubmit} 
+                onSave={handleAddSubmit} 
             />  
         </div>
     );

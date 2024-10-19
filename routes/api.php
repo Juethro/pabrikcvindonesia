@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 
 // Katalog
 Route::get('/catalog', [CatalogController::class, 'index']); // Untuk fetch semua data catalog
+Route::post('/catalog', [CatalogController::class, 'store']); // Untuk Add new item catalog
 Route::patch('/catalog/{id}', [CatalogController::class, 'update']); // Untuk update catalog berdasarkan ID
 Route::delete('/catalog/{id}', [CatalogController::class, 'destroy']); // Untuk delete
 

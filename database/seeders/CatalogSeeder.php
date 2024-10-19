@@ -23,7 +23,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Simple',
             'description' => 'Desain ini cocok untuk pelamar yang menginginkan tampilan sederhana, elegan, dan profesional, dengan penggunaan elemen yang minimalis untuk menarik perhatian HRD.',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 1,
             'group_id' => $group1,
             'kode' => '01A'
         ]);
@@ -32,7 +31,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Classic',
             'description' => 'Desain klasik ini memberikan tampilan yang tradisional namun profesional, dengan elemen-elemen yang memberikan kesan formal.',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 2,
             'group_id' => $group2,
             'kode' => '01B'
         ]);
@@ -41,7 +39,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Modern',
             'description' => 'Desain modern dan efektif untuk digunakan keseharian',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 2,
             'group_id' => $group2,
             'kode' => '02B'
         ]);
@@ -50,7 +47,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Creative',
             'description' => 'Desain kreatif dan efektif untuk digunakan keseharian',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 1,
             'group_id' => $group2,
             'kode' => '03B'
         ]);
@@ -59,7 +55,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Professional',
             'description' => 'Desain profesional dan efektif untuk digunakan keseharian',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 4,
             'group_id' => $group3,
             'kode' => '01C'
         ]);
@@ -68,7 +63,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Elegant',
             'description' => 'Desain elegan dan minimalis',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 6,
             'group_id' => $group3,
             'kode' => '02C'
         ]);
@@ -77,7 +71,6 @@ class CatalogSeeder extends Seeder
             'title' => 'Minimalist',
             'description' => 'Desain sederhana dan bersih',
             'image_path' => 'images/sample1.jpg',
-            'colors_tag' => 4,
             'group_id' => $group4,
             'kode' => '01D'
         ]);

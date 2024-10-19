@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('image_path');
-            $table->integer('colors_tag');
             $table->string('group');
             $table->timestamps();
         });

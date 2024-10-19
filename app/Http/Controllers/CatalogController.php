@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalog;
+use App\Models\Group;
 use App\Models\NumberInformation;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,35 @@ class CatalogController extends Controller
 
         return $catalog;
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'kode' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'group_id' => 'required|exists:groups,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $imagePath = $request->file('image')->store('images', 'public');
+
+        $catalogItem = Catalog::create([
+            'kode' => $request->input('kode'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'group_id' => $request->input('group_id'),
+            'image_path' => $imagePath,
+        ]);
+
+        return response()->json([
+            'message' => 'Catalog item created successfully',
+            'data' => $catalogItem,
+        ], 201);
+    }
+
+        
+    
 
     public function update(Request $request, $id)
     {
