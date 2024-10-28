@@ -5,6 +5,9 @@ const TabelMore = () => {
   const [placeholderPhoneNumber, setPlaceholderPhoneNumber] = useState("Masukkan Nomor Telepon");
   const [phoneNumber, setPhoneNumber] = useState("Masukkan Nomor Telepon");
   const [changes, setChanges] = useState(false);
+  const [groups, setGroups] = useState([]);
+  const [editMode, setEditMode] = useState(null);
+  const [groupData, setGroupData] = useState({ name: '' });
 
   // for toast notification
   const numberSaved = () => toast.success("Number Saved!");
@@ -61,6 +64,35 @@ const TabelMore = () => {
       });
   }
 
+    useEffect(() => {
+      fetchGroups();
+  }, []);
+
+  const fetchGroups = async () => {
+      const response = await axios.get('/api/groups');
+      setGroups(response.data);
+  };
+
+  const handleEdit = (group) => {
+      setEditMode(group.id);
+      setGroupData({ name: group.name });
+  };
+
+  const handleCancel = () => {
+      setEditMode(null);
+      setGroupData({ name: '' });
+  };
+
+  const handleChange = (e) => {
+      setGroupData({ ...groupData, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = async (id) => {
+      await axios.put(`/api/groups/${id}`, groupData);
+      fetchGroups();
+      handleCancel();
+  };
+
 
   return (
     <div>
@@ -106,15 +138,70 @@ const TabelMore = () => {
                             Cancel
                         </button> */}
                     </div>
-                </div>
-                
+                </div>  
             )}
         </div>
-
       </div>
-      
-      
-      
+      <div className="mt-4 p-10">
+            <h2 className="w-96 text-2xl font-black border-solid border-b-2 border-black mb-4">Group Management</h2>
+            <table className="min-w-full bg-white border border-gray-300">
+                <thead>
+                    <tr className="bg-gray-100">
+                        <th className="py-2 px-4 border-b text-left w-1/12">ID</th>
+                        <th className="py-2 px-4 border-b text-left w-8/12">Group Name</th>
+                        <th className="py-2 px-4 border-b text-center w-3/12">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {groups.map((group) => (
+                        <tr key={group.id} className="hover:bg-gray-50">
+                            <td className="py-2 px-4 border-b text-center">{group.id}</td>
+                            <td className="py-2 px-4 border-b">
+                                {editMode === group.id ? (
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={groupData.name}
+                                        onChange={handleChange}
+                                        className="border border-gray-300 rounded-md p-2 w-full"
+                                    />
+                                ) : (
+                                    group.name
+                                )}
+                            </td>
+
+                            <td className="py-2 px-4 border-b text-center">
+                                {editMode === group.id ? (
+                                    <>
+                                        <button
+                                            onClick={() => handleSave(group.id)}
+                                            className="bg-blue-500 text-white px-3 py-1 mr-2 rounded hover:bg-blue-600 transition"
+                                        >
+                                            Save
+                                        </button>
+                                        
+                                        <button
+                                            onClick={handleCancel}
+                                            className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 transition"
+                                        >
+                                            Cancel
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button
+                                        onClick={() => handleEdit(group)}
+                                        className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition"
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     </div>
   );
 };

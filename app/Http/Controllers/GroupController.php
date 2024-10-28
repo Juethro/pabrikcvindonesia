@@ -13,5 +13,12 @@ class GroupController extends Controller
     {
         $groups = Group::all(); // Mengambil semua data dari tabel 'groups'
         return response()->json($groups);
+        
+    }
+    public function update(Request $request, $id) {
+        $group = Group::findOrFail($id);
+        $group->name = $request->name;
+        $group->save();
+        return response()->json(['message' => 'Group updated successfully']);
     }
 }

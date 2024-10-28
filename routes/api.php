@@ -24,6 +24,7 @@ Route::post('/cvbanner/saveorder', [BannerController::class, 'save_order']);
 
 // Group
 Route::get('/groups', [GroupController::class, 'index']);
+Route::put('/groups/{id}', [GroupController::class, 'update']);
 
 // Number Information
 Route::get('/number_information', [NumberController::class, 'get_number']);
