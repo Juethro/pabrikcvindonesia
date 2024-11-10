@@ -12,8 +12,10 @@ const TabelMore = () => {
   // for toast notification
   const numberSaved = () => toast.success("Number Saved!");
   const numberFailSaved = (response) => toast.warn("Error: " + response);
-  
-  console.log('PhoneNumber: ' + phoneNumber);
+  // for group
+  const newGroupSaved = () => toast.success("New Group Saved!");
+  const groupEditSaved = () => toast.success("Group Edit Saved!");
+  const groupDeleted = () => toast.success("Group Deleted!!");
 
   useEffect(() => {
       fetch('/api/number_information')
@@ -89,6 +91,7 @@ const TabelMore = () => {
 
   const handleSave = async (id) => {
       await axios.put(`/api/groups/${id}`, groupData);
+      groupEditSaved();
       fetchGroups();
       handleCancel();
   };

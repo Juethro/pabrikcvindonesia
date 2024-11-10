@@ -1,9 +1,14 @@
-import {React,useState,useEffect} from 'react';
-import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown } from 'react-feather';
-import DeletePopup from './DeletePopup';
-import EditPopup from './EditPopup';
-import AddPopup from './AddPopup';
-import { ToastContainer, toast } from 'react-toastify';
+import { React, useState, useEffect } from "react";
+import {
+    ChevronLeft,
+    ChevronRight,
+    ChevronUp,
+    ChevronDown,
+} from "react-feather";
+import DeletePopup from "./DeletePopup";
+import EditPopup from "./EditPopup";
+import AddPopup from "./AddPopup";
+import { ToastContainer, toast } from "react-toastify";
 
 const TabelEtalase = () => {
     const [Catalog, setCatalog] = useState([]);
@@ -12,9 +17,12 @@ const TabelEtalase = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5; // Batas item per halaman
-    const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-    const [sortDirection, setSortDirection] = useState('asc');
-    const [sortField, setSortField] = useState('id');
+    const [sortConfig, setSortConfig] = useState({
+        key: null,
+        direction: "ascending",
+    });
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [sortField, setSortField] = useState("id");
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [showEditPopup, setShowEditPopup] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -22,13 +30,13 @@ const TabelEtalase = () => {
 
     // for toast notification
     const newStuffAdd = () => toast.success("New Stuff Added!");
-    const stuffDeleted = () => toast.warn("Stuff Deleted!");
+    const stuffDeleted = () => toast.warn("Product Deleted!");
     const stuffEditSaved = () => toast.success("Information Saved!");
     const newGroupAdd = () => toast.success("New Group Added");
 
     const handleSort = (field) => {
         setSortField(field);
-        setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     };
 
     const handleDelete = (item) => {
@@ -44,82 +52,77 @@ const TabelEtalase = () => {
     const confirmDelete = async () => {
         try {
             const response = await fetch(`/api/catalog/${selectedItem.id}`, {
-                method: 'DELETE',
+                method: "DELETE",
             });
-    
+
             if (!response.ok) {
-                throw new Error('Failed to delete item');
+                throw new Error("Failed to delete item");
             }
-    
+
             // Update Catalog state
-            setCatalog(prevCatalog => 
-                prevCatalog.filter(item => item.id !== selectedItem.id)
+            setCatalog((prevCatalog) =>
+                prevCatalog.filter((item) => item.id !== selectedItem.id),
             );
-    
+
             setShowDeletePopup(false);
             setSelectedItem(null);
             stuffDeleted();
         } catch (error) {
-            console.error('Error deleting item:', error);
+            console.error("Error deleting item:", error);
         }
     };
 
     const handleEditSubmit = async (updatedItem) => {
         try {
             const response = await fetch(`/api/catalog/${updatedItem.id}`, {
-                method: 'PATCH',
+                method: "PATCH",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(updatedItem),
             });
-    
+
             if (response.ok) {
                 const updatedCatalog = await response.json();
                 setCatalog((prevCatalog) =>
                     prevCatalog.map((item) =>
-                        item.id === updatedCatalog.id ? updatedCatalog : item
-                    )
+                        item.id === updatedCatalog.id ? updatedCatalog : item,
+                    ),
                 );
                 setShowEditPopup(false);
                 setSelectedItem(null);
                 stuffEditSaved();
             } else {
-                console.error('Failed to update catalog');
+                console.error("Failed to update catalog");
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error("Error:", error);
         }
     };
 
     const handleAddSubmit = async (newItem) => {
         try {
-            const response = await fetch('/api/catalog', {
-                method: 'POST',
+            const response = await fetch("/api/catalog", {
+                method: "POST",
                 body: newItem,
             });
-    
+
             if (!response.ok) {
-                throw new Error('Failed to add item');
+                throw new Error("Failed to add item");
             }
-    
+
             const addedItem = await response.json();
-            setCatalog(prevCatalog => [...prevCatalog, addedItem]); // Update state dengan item baru tanpa refresh
+            setCatalog((prevCatalog) => [...prevCatalog, addedItem]); // Update state dengan item baru tanpa refresh
             setShowAddPopup(false); // Tutup popup setelah berhasil
         } catch (error) {
-            console.error('Error adding item:', error);
+            console.error("Error adding item:", error);
         }
     };
-    
-    
-    
-    
-    
 
     // Fungsi untuk memotong teks panjang
     const truncateText = (text, maxLength) => {
         if (text.length > maxLength) {
-            return text.slice(0, maxLength) + '...';
+            return text.slice(0, maxLength) + "...";
         }
         return text;
     };
@@ -129,12 +132,12 @@ const TabelEtalase = () => {
         const fetchData = async () => {
             try {
                 const [catalogRes, groupRes] = await Promise.all([
-                    fetch('/api/catalog'), // API untuk catalog
-                    fetch('/api/groups'),  // API untuk grup
+                    fetch("/api/catalog"), // API untuk catalog
+                    fetch("/api/groups"), // API untuk grup
                 ]);
 
                 if (!catalogRes.ok || !groupRes.ok) {
-                    throw new Error('Failed to fetch data');
+                    throw new Error("Failed to fetch data");
                 }
 
                 const catalogData = await catalogRes.json();
@@ -144,7 +147,7 @@ const TabelEtalase = () => {
                 setGroups(groupData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data:", error);
                 setError(error);
                 setLoading(false);
             }
@@ -154,15 +157,15 @@ const TabelEtalase = () => {
     }, []);
 
     const getGroupName = (groupId) => {
-        const group = Groups.find(g => g.id === groupId);
-        return group ? group.name : 'Unknown Group';
+        const group = Groups.find((g) => g.id === groupId);
+        return group ? group.name : "Unknown Group";
     };
 
     // Fungsi untuk menangani sorting
     const sortItems = (key) => {
-        let direction = 'ascending';
-        if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-            direction = 'descending';
+        let direction = "ascending";
+        if (sortConfig.key === key && sortConfig.direction === "ascending") {
+            direction = "descending";
         }
         setSortConfig({ key, direction });
     };
@@ -170,10 +173,10 @@ const TabelEtalase = () => {
     // Fungsi sortir berdasarkan konfigurasi
     const sortedItems = [...Catalog].sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
+            return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
+            return sortConfig.direction === "ascending" ? 1 : -1;
         }
         return 0;
     });
@@ -209,21 +212,35 @@ const TabelEtalase = () => {
     if (error) return <p>Error loading data: {error.message}</p>;
 
     return (
-        <div className='font-montserrat'>
+        <div className="font-montserrat">
             <ToastContainer />
             <div className="flex mt-6 mb-2 h-10 pl-10 text-2xl font-black justify-between">
                 <div className="w-96 border-solid border-b-2 border-black">
                     Tabel Produk
                 </div>
 
-                <button onClick={() => setShowAddPopup(true)} className='mr-10 flex bg-white rounded-lg p-2 hover:bg-gray-200 hover:text-gray-800'>
-                    <div className='flex text-base font-medium content-center items-center'>
+                <button
+                    onClick={() => setShowAddPopup(true)}
+                    className="mr-10 flex bg-white rounded-lg p-2 hover:bg-gray-200 hover:text-gray-800"
+                >
+                    <div className="flex text-base font-medium content-center items-center">
                         Tambahkan
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="size-5"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M12 4.5v15m7.5-7.5h-15"
+                            />
                         </svg>
                     </div>
-                </button> 
+                </button>
             </div>
 
             <div className="relative overflow-x-auto shadow-md rounded-lg mx-10">
@@ -233,8 +250,12 @@ const TabelEtalase = () => {
                             <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center">
                                     Kode
-                                    <button onClick={() => sortItems('id')} className="flex items-center ml-2">
-                                        {sortConfig.key === 'id' && sortConfig.direction === 'ascending' ? (
+                                    <button
+                                        onClick={() => sortItems("id")}
+                                        className="flex items-center ml-2"
+                                    >
+                                        {sortConfig.key === "id" &&
+                                        sortConfig.direction === "ascending" ? (
                                             <ChevronUp className="w-6 h-6 text-white hover:text-gray-600" />
                                         ) : (
                                             <ChevronDown className="w-6 h-6 text-white hover:text-gray-600" />
@@ -246,8 +267,12 @@ const TabelEtalase = () => {
                             <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center">
                                     Nama Produk
-                                    <button onClick={() => sortItems('title')} className="flex items-center ms-2">
-                                    {sortConfig.key === 'title' && sortConfig.direction === 'ascending' ? (
+                                    <button
+                                        onClick={() => sortItems("title")}
+                                        className="flex items-center ms-2"
+                                    >
+                                        {sortConfig.key === "title" &&
+                                        sortConfig.direction === "ascending" ? (
                                             <ChevronUp className="w-6 h-6 text-white hover:text-gray-600" />
                                         ) : (
                                             <ChevronDown className="w-6 h-6 text-white hover:text-gray-600" />
@@ -256,13 +281,19 @@ const TabelEtalase = () => {
                                 </div>
                             </th>
 
-                            <th scope="col" className="px-6 py-3">Deskripsi Produk</th>
+                            <th scope="col" className="px-6 py-3">
+                                Deskripsi Produk
+                            </th>
 
                             <th scope="col" className="px-6 py-3">
                                 <div className="flex items-center">
                                     Group
-                                    <button onClick={() => sortItems('group_name')} className="flex items-center ms-2">
-                                    {sortConfig.key === 'group_name' && sortConfig.direction === 'ascending' ? (
+                                    <button
+                                        onClick={() => sortItems("group_name")}
+                                        className="flex items-center ms-2"
+                                    >
+                                        {sortConfig.key === "group_name" &&
+                                        sortConfig.direction === "ascending" ? (
                                             <ChevronUp className="w-6 h-6 text-white hover:text-gray-600" />
                                         ) : (
                                             <ChevronDown className="w-6 h-6 text-white hover:text-gray-600" />
@@ -281,32 +312,43 @@ const TabelEtalase = () => {
 
                     <tbody>
                         {currentItems.map((item) => (
-                            <tr key={item.id} className="bg-white border-b border-gray-200">
-                                <th className="px-6 py-4 font-medium text-black">{item.kode}</th>
+                            <tr
+                                key={item.id}
+                                className="bg-white border-b border-gray-200"
+                            >
+                                <th className="px-6 py-4 font-medium text-black">
+                                    {item.kode}
+                                </th>
 
                                 <td className="px-6 py-4">{item.title}</td>
 
                                 <td className="px-6 py-4">
-                                    {truncateText(item.description, 50)} {/* Batasi deskripsi hingga 50 karakter */}
+                                    {truncateText(item.description, 50)}{" "}
+                                    {/* Batasi deskripsi hingga 50 karakter */}
                                 </td>
 
                                 <td className="px-6 py-4">{item.group_name}</td>
 
                                 <td className="px-6 py-4">
-                                    <img src={`/storage/${item.image_path}`} alt={item.title} className="w-16 h-16" />
-
+                                    <img
+                                        src={`/storage/${item.image_path}`}
+                                        alt={item.title}
+                                        className="w-16 h-16"
+                                    />
                                 </td>
 
                                 <td className="px-6 py-4 text-right">
-                                    <button 
-                                        onClick={() => handleDelete(item)} 
-                                        className="p-2 font-medium text-white bg-red-600 rounded-lg">
+                                    <button
+                                        onClick={() => handleDelete(item)}
+                                        className="p-2 font-medium text-white bg-red-600 rounded-lg"
+                                    >
                                         Hapus
                                     </button>
 
-                                    <button 
-                                        onClick={() => handleEdit(item)} 
-                                        className="ml-2 p-2 font-medium text-white bg-orange-400 rounded-lg">
+                                    <button
+                                        onClick={() => handleEdit(item)}
+                                        className="ml-2 p-2 font-medium text-white bg-orange-400 rounded-lg"
+                                    >
                                         Edit
                                     </button>
                                 </td>
@@ -330,7 +372,7 @@ const TabelEtalase = () => {
                     <button
                         key={index + 1}
                         onClick={() => paginate(index + 1)}
-                        className={`w-4 h-4 rounded-full ${currentPage === index + 1 ? 'bg-gray-400' : 'bg-gray-200'} transition-all`}
+                        className={`w-4 h-4 rounded-full ${currentPage === index + 1 ? "bg-gray-400" : "bg-gray-200"} transition-all`}
                     />
                 ))}
 
@@ -342,24 +384,24 @@ const TabelEtalase = () => {
                     <ChevronRight size={20} />
                 </button>
             </div>
-            <DeletePopup 
-                isOpen={showDeletePopup} 
-                onClose={() => setShowDeletePopup(false)} 
-                onConfirm={confirmDelete} 
+            <DeletePopup
+                isOpen={showDeletePopup}
+                onClose={() => setShowDeletePopup(false)}
+                onConfirm={confirmDelete}
             />
 
-            <EditPopup 
-                isOpen={showEditPopup} 
-                onClose={() => setShowEditPopup(false)} 
-                item={selectedItem} 
-                onSave={handleEditSubmit} 
+            <EditPopup
+                isOpen={showEditPopup}
+                onClose={() => setShowEditPopup(false)}
+                item={selectedItem}
+                onSave={handleEditSubmit}
             />
 
-            <AddPopup 
-                isOpen={showAddPopup} 
-                onClose={() => setShowAddPopup(false)} 
-                onSave={handleAddSubmit} 
-            />  
+            <AddPopup
+                isOpen={showAddPopup}
+                onClose={() => setShowAddPopup(false)}
+                onSave={handleAddSubmit}
+            />
         </div>
     );
 };
