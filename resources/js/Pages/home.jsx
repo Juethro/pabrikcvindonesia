@@ -254,12 +254,6 @@ function Homepage() {
       </section>
 
       <div id='langkah' className='mt-20 bg-gradient-to-r from-red-600 to-red-900 w-full h-50 shadow-inner'>
-        <div class="custom-shape-divider-top-1726733958">
-        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
-        </svg>
-        </div>
-
         <div className='flex justify-center py-8'>
           <section className="p-8 text-black">
             <h2 className="text-white text-2xl font-montserrat font-bold mb-8 underline underline-offset-2">Bagaimana Langkahnya?</h2>
