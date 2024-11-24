@@ -112,7 +112,7 @@ const TabelMore = () => {
                 Nomor Telepon Untuk Dihubungkan Dengan Whatsapp (Max: 14 Digit)
             </label>
             <p className="text-sm font-medium text-gray-400">
-                Contoh: 0812-2531-3309 menjadi 81225313309
+                Contoh: 0812-2531-3309 menjadi 6281225313309
             </p>
             <div className="mt-1">
                 <input
