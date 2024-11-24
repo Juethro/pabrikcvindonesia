@@ -332,8 +332,8 @@ function Homepage() {
         </div>
 
         {/* Right Section: CV Preview */}
-        <div className='lg:w-1/2 w-full flex justify-center lg:justify-end mt-8 lg:mt-0'>
-          <img src='images/sample1.jpg' className='w-4/5 sm:w-3/4 lg:w-2/3' alt="CV Preview" />
+        <div className='lg:w-1/2 w-full h-full flex justify-center lg:justify-center mt-8 lg:mt-0'>
+          <img src='images/CVS.png' className='w-4/5 sm:w-3/4 lg:w-2/3' alt="CV Preview" />
         </div>
       </div>
     </div>
