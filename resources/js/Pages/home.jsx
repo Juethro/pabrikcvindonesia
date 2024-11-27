@@ -176,12 +176,11 @@ function Homepage() {
         </div>
       
       <section className="container mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Katalog CV</h2>
-        <div className='flex flex-col items-center justify-center p-4 space-y-16'>
-          <div className="flex flex-wrap justify-center gap-4 h-10">
+        <div className='mt-10 flex flex-col items-center justify-center p-4 space-y-16'>
+          <div className="flex flex-wrap justify-center gap-4 h-10 mb-8">
             <button 
               onClick={() => handleGroupClick(null)} 
-              className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === null ? 'bg-gray-200' : ''}`}>
+              className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:bg-gray-200 ${selectedGroup === null ? 'bg-gray-200' : ''}`}>
               Semua
             </button>
 
@@ -189,7 +188,7 @@ function Homepage() {
               <button
                 key={group.id}
                 onClick={() => handleGroupClick(group.id)} 
-                className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:border-4 ${selectedGroup === group.id ? 'bg-gray-200' : ''}`}
+                className={`px-4 py-2 border-gray-200 border rounded-full text-black hover:bg-gray-200 ${selectedGroup === group.id ? 'bg-gray-200' : ''}`}
               >
                 {group.name}
               </button>
